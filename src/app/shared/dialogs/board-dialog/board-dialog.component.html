@@ -1,0 +1,43 @@
+<div class="board-dialog-container w-full">
+  <!-- Dialog Header Bar (Flush Top-Left Title, Flush Top-Right Danger Close Icon) -->
+  <div class="dialog-header-bar w-full flex flex-row items-center justify-between pb-3 border-b border-slate-100 mb-4">
+    <div class="flex items-center gap-2.5">
+      <mat-icon color="primary" class="!w-6 !h-6 !text-2xl !leading-none flex items-center justify-center shrink-0">dashboard</mat-icon>
+      <span class="text-xl font-bold text-slate-900 leading-none flex items-center">
+        {{ data.title }}
+      </span>
+    </div>
+
+    <!-- Persistent Danger Close Button -->
+    <button 
+      type="button" 
+      mat-icon-button 
+      (click)="onCancel()" 
+      matTooltip="Close"
+      class="dialog-close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-dialog-content class="!px-0 pt-1">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Board Name</mat-label>
+        <input matInput formControlName="name" placeholder="e.g. Q3 Product Release" required autofocus>
+        <mat-error *ngIf="form.get('name')?.hasError('required')">
+          Board name is required
+        </mat-error>
+        <mat-error *ngIf="form.get('name')?.hasError('nameTaken')">
+          A board with this name already exists
+        </mat-error>
+      </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end" class="!px-0 mt-4">
+      <button mat-button type="button" (click)="onCancel()">Cancel</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
+        {{ data.submitText || 'Save Board' }}
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

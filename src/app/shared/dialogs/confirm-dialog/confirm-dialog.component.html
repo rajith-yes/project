@@ -1,0 +1,35 @@
+<div class="confirm-dialog-container w-full max-w-md">
+  <!-- Dialog Header Bar (Flush Top-Left Title, Flush Top-Right Danger Close Icon) -->
+  <div class="dialog-header-bar w-full flex flex-row items-center justify-between pb-3 border-b border-slate-100 mb-4">
+    <div class="flex items-center gap-3">
+      <div [class]="data.isDanger ? 'icon-wrapper danger' : 'icon-wrapper primary'">
+        <mat-icon>{{ data.isDanger ? 'warning' : 'help_outline' }}</mat-icon>
+      </div>
+      <span class="text-xl font-bold text-slate-900 leading-none flex items-center">{{ data.title }}</span>
+    </div>
+
+    <!-- Persistent Danger Close Button -->
+    <button 
+      type="button" 
+      mat-icon-button 
+      (click)="onCancel()" 
+      matTooltip="Close"
+      class="dialog-close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content class="!px-0 text-slate-600 mb-6">
+    <p>{{ data.message }}</p>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="!px-0 gap-2">
+    <button mat-button (click)="onCancel()">{{ data.cancelText || 'Cancel' }}</button>
+    <button 
+      mat-flat-button 
+      [color]="data.isDanger ? 'warn' : 'primary'"
+      (click)="onConfirm()">
+      {{ data.confirmText || 'Confirm' }}
+    </button>
+  </mat-dialog-actions>
+</div>

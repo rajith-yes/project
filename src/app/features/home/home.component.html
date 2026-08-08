@@ -1,0 +1,189 @@
+<div class="space-y-8">
+  <!-- Hero Banner -->
+  <div class="hero-banner relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-700 via-indigo-800 to-slate-900 p-8 sm:p-10 text-white shadow-xl">
+    <div class="relative z-10 max-w-2xl">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-indigo-400/30">
+        <mat-icon class="!w-4 !h-4 !text-sm leading-none">auto_awesome</mat-icon>
+        Next-Gen SaaS Task Management
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">
+        Welcome back, {{ currentUser?.fullName || 'Teammate' }}! 👋
+      </h1>
+      <p class="text-indigo-100 text-base sm:text-lg leading-relaxed mb-6">
+        Organize tasks, collaborate with assignees, drag & drop across Kanban columns, and monitor productivity with real-time Chart.js analytics.
+      </p>
+
+      <div class="flex flex-wrap gap-4">
+        <a mat-stroked-button routerLink="/task-board" class="!px-6 !py-2.5 !text-base !font-semibold !rounded-xl !text-white !border-indigo-400/50 hover:!bg-white/10">
+          <mat-icon class="mr-2">view_kanban</mat-icon>
+          Open Task Board
+        </a>
+        <a mat-stroked-button routerLink="/dashboard" class="!px-6 !py-2.5 !text-base !font-semibold !rounded-xl !text-white !border-indigo-400/50 hover:!bg-white/10">
+          <mat-icon class="mr-2">analytics</mat-icon>
+          View Analytics
+        </a>
+      </div>
+    </div>
+
+    <div class="glow-bg absolute -right-12 -bottom-12 w-80 h-80 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none"></div>
+  </div>
+
+  <!-- Metric Counters Row (Assigned Tasks Metrics for Logged-In User) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    
+    <div class="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm flex items-center gap-4">
+      <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0">
+        <mat-icon class="!w-6 !h-6 !text-2xl leading-none">assignment</mat-icon>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Assigned</p>
+        <h3 class="text-2xl font-bold text-slate-900 m-0">{{ totalTasks }}</h3>
+      </div>
+    </div>
+
+    <div class="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm flex items-center gap-4">
+      <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
+        <mat-icon class="!w-6 !h-6 !text-2xl leading-none">pending_actions</mat-icon>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">In Progress</p>
+        <h3 class="text-2xl font-bold text-slate-900 m-0">{{ inProgressTasks }}</h3>
+      </div>
+    </div>
+
+    <div class="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm flex items-center gap-4">
+      <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
+        <mat-icon class="!w-6 !h-6 !text-2xl leading-none">check_circle</mat-icon>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Completed</p>
+        <h3 class="text-2xl font-bold text-slate-900 m-0">{{ completedTasks }}</h3>
+      </div>
+    </div>
+
+    <div class="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm flex items-center gap-4">
+      <div class="w-12 h-12 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center flex-shrink-0">
+        <mat-icon class="!w-6 !h-6 !text-2xl leading-none">dashboard</mat-icon>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Active Boards</p>
+        <h3 class="text-2xl font-bold text-slate-900 m-0">{{ totalBoards }}</h3>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Capabilities Section -->
+  <div>
+    <div class="mb-6">
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Platform Capabilities</h2>
+      <p class="text-slate-500 text-sm">Everything you need to streamline project delivery</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center mb-4 flex-shrink-0">
+            <mat-icon class="!w-6 !h-6 !text-2xl leading-none">dashboard</mat-icon>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Multiple Boards</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Create separate workspace boards for products, sprints, or departments. Rename or delete boards with ease.
+          </p>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-100">
+          <span class="text-xs font-semibold text-indigo-600 flex items-center gap-1">
+            Kanban Workspaces <mat-icon class="!w-4 !h-4 !text-sm leading-none">arrow_forward</mat-icon>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4 flex-shrink-0">
+            <mat-icon class="!w-6 !h-6 !text-2xl leading-none">view_column</mat-icon>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">5 Status Columns</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Track lifecycle stages: Backlog, Todo, In Progress, In Testing, and Completed in standard Kanban format.
+          </p>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-100">
+          <span class="text-xs font-semibold text-blue-600 flex items-center gap-1">
+            Agile Workflow <mat-icon class="!w-4 !h-4 !text-sm leading-none">arrow_forward</mat-icon>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center mb-4 flex-shrink-0">
+            <mat-icon class="!w-6 !h-6 !text-2xl leading-none">touch_app</mat-icon>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">CDK Drag & Drop</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Seamlessly drag tasks across columns with smooth animations and instant JSON Server persistence.
+          </p>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-100">
+          <span class="text-xs font-semibold text-purple-600 flex items-center gap-1">
+            Angular CDK <mat-icon class="!w-4 !h-4 !text-sm leading-none">arrow_forward</mat-icon>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-4 flex-shrink-0">
+            <mat-icon class="!w-6 !h-6 !text-2xl leading-none">people</mat-icon>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Task Assignment</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Assign tasks to single or multiple team members. View assigned tasks automatically upon user login.
+          </p>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-100">
+          <span class="text-xs font-semibold text-emerald-600 flex items-center gap-1">
+            Team Collaboration <mat-icon class="!w-4 !h-4 !text-sm leading-none">arrow_forward</mat-icon>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center mb-4 flex-shrink-0">
+            <mat-icon class="!w-6 !h-6 !text-2xl leading-none">search</mat-icon>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Instant Search & Filter</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Filter tasks by name in real-time or refine by created date range to pinpoint critical backlog items.
+          </p>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-100">
+          <span class="text-xs font-semibold text-amber-600 flex items-center gap-1">
+            Smart Filtering <mat-icon class="!w-4 !h-4 !text-sm leading-none">arrow_forward</mat-icon>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center mb-4 flex-shrink-0">
+            <mat-icon class="!w-6 !h-6 !text-2xl leading-none">pie_chart</mat-icon>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Dashboard Analytics</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Analyze status distribution with dynamic Chart.js pie charts and paginated summary tables.
+          </p>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-100">
+          <span class="text-xs font-semibold text-rose-600 flex items-center gap-1">
+            Chart.js Widgets <mat-icon class="!w-4 !h-4 !text-sm leading-none">arrow_forward</mat-icon>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

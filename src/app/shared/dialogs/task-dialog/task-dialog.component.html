@@ -1,0 +1,210 @@
+<div class="task-dialog-container w-full min-w-[320px] sm:min-w-[480px]">
+  <!-- Dialog Header Bar (Flush Top-Left Title, Flush Top-Right Danger Close Icon) -->
+  <div class="dialog-header-bar w-full flex flex-row items-center justify-between pb-3 border-b border-slate-100 mb-4">
+    <div class="flex items-center gap-2.5">
+      <mat-icon color="primary" class="!w-6 !h-6 !text-2xl !leading-none flex items-center justify-center shrink-0">assignment</mat-icon>
+      <span class="text-xl font-bold text-slate-900 leading-none flex items-center">
+        {{ data.title }}
+      </span>
+    </div>
+
+    <!-- Persistent Danger Close Button -->
+    <button 
+      type="button" 
+      mat-icon-button 
+      (click)="onCancel()" 
+      matTooltip="Close"
+      class="dialog-close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col">
+    <mat-dialog-content class="!px-0 flex flex-col pt-1">
+      
+      <!-- Task Title Field -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Task Title</mat-label>
+        <input matInput formControlName="taskName" placeholder="e.g. Implement authentication guard" required autofocus>
+        <mat-error *ngIf="form.get('taskName')?.hasError('required')">
+          Task title is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Description Field -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" rows="3" placeholder="Add detailed description or context..."></textarea>
+      </mat-form-field>
+
+      <!-- Status & Assignees Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start">
+        
+        <!-- Custom Interactive Status Badge Selector Field -->
+        <div class="flex flex-col gap-1 w-full">
+          <label class="text-[11px] font-semibold text-slate-500 tracking-wider uppercase ml-0.5">Status</label>
+          <div 
+            [matMenuTriggerFor]="statusDialogMenu" 
+            class="flex items-center justify-between px-3 py-1.5 bg-white border border-slate-300 rounded-lg min-h-[44px] shadow-2xs hover:border-indigo-400 cursor-pointer transition-colors w-full">
+            
+            <!-- Current Status Color Badge -->
+            <div 
+              class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border shadow-2xs transition-all"
+              [ngClass]="getStatusBadgeClass(form.get('status')?.value)">
+              <span class="w-2 h-2 rounded-full shrink-0" [style.background-color]="getStatusDotColor(form.get('status')?.value)"></span>
+              <span>{{ form.get('status')?.value || 'Select Status' }}</span>
+            </div>
+
+            <!-- Pencil / Edit Icon Button -->
+            <button 
+              type="button" 
+              class="w-7 h-7 rounded-full text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 flex items-center justify-center transition-colors shrink-0 ml-auto"
+              matTooltip="Change Status">
+              <mat-icon class="!w-4 !h-4 !text-base flex items-center justify-center leading-none">edit</mat-icon>
+            </button>
+
+            <!-- Status Selection Dropdown Menu -->
+            <mat-menu #statusDialogMenu="matMenu" class="!rounded-2xl py-1 min-w-[200px]">
+              <div class="px-3.5 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100 mb-1">
+                Select Status
+              </div>
+              <button 
+                *ngFor="let s of statuses" 
+                mat-menu-item 
+                (click)="selectStatus(s)"
+                class="!px-3.5 !py-2 flex items-center justify-between w-full hover:bg-slate-50 transition-colors">
+                <div 
+                  class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold border"
+                  [ngClass]="getStatusBadgeClass(s)">
+                  <span class="w-2 h-2 rounded-full shrink-0" [style.background-color]="getStatusDotColor(s)"></span>
+                  <span>{{ s }}</span>
+                </div>
+                <mat-icon *ngIf="form.get('status')?.value === s" class="!w-4 !h-4 !text-base text-indigo-600 ml-2">check</mat-icon>
+              </button>
+            </mat-menu>
+
+          </div>
+        </div>
+
+        <!-- Custom Dynamic Width Responsive Assignees Selector Field -->
+        <div class="flex flex-col gap-1 w-full">
+          <label class="text-[11px] font-semibold text-slate-500 tracking-wider uppercase ml-0.5">Assignees</label>
+          <div class="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-300 rounded-lg min-h-[44px] shadow-2xs hover:border-indigo-400 transition-colors w-full overflow-hidden">
+            
+            <!-- Dynamic Width Selected Avatars Stack -->
+            <div #avatarContainer class="flex items-center -space-x-2 overflow-hidden py-0.5 flex-1 min-w-0">
+              <ng-container *ngFor="let user of getVisibleAssignees()">
+                <div 
+                  class="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold ring-2 ring-white shadow-2xs shrink-0 cursor-default"
+                  [style.background-color]="getAvatarColor(user.fullName)"
+                  [matTooltip]="user.fullName + ' (@' + user.username + ')'">
+                  {{ getUserInitial(user.fullName) }}
+                </div>
+              </ng-container>
+
+              <!-- +N Remaining Badge (Appears dynamically when avatars reach container width boundary) -->
+              <div 
+                *ngIf="getRemainingAssigneeCount() > 0"
+                class="w-7 h-7 rounded-full bg-slate-800 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white shrink-0 cursor-default"
+                [matTooltip]="'And ' + getRemainingAssigneeCount() + ' more assignees'">
+                +{{ getRemainingAssigneeCount() }}
+              </div>
+
+              <!-- Empty State hint when no assignees -->
+              <span *ngIf="getSelectedUsers().length === 0" class="text-xs text-slate-400 italic pl-1">
+                Unassigned
+              </span>
+            </div>
+
+            <!-- Circular (+) Add / Edit Assignee Button (Pinned to Right Edge) -->
+            <button 
+              type="button" 
+              [matMenuTriggerFor]="assigneeDialogMenu" 
+              class="w-7 h-7 rounded-full border border-dashed border-indigo-400 text-indigo-600 bg-indigo-50/70 hover:bg-indigo-100 flex items-center justify-center transition-colors shrink-0 ml-auto"
+              matTooltip="Add or Edit Assignees">
+              <mat-icon class="!w-4 !h-4 !text-base flex items-center justify-center leading-none">add</mat-icon>
+            </button>
+
+            <!-- Multi-Select Assignee Menu with User Search Input -->
+            <mat-menu #assigneeDialogMenu="matMenu" class="!rounded-2xl py-0 min-w-[280px] sm:min-w-[340px]">
+              <div class="px-4 py-2.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100 flex items-center justify-between bg-slate-50/80 rounded-t-2xl">
+                <span>Select Assignees</span>
+                <span class="text-[11px] font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100">
+                  {{ getSelectedUsers().length }} selected
+                </span>
+              </div>
+
+              <!-- Search Input Box for Users -->
+              <div class="p-2 border-b border-slate-100 bg-white" (click)="$event.stopPropagation()">
+                <div class="relative flex items-center">
+                  <mat-icon class="absolute left-2.5 !w-4 !h-4 !text-base text-slate-400 pointer-events-none">search</mat-icon>
+                  <input 
+                    type="text" 
+                    [(ngModel)]="assigneeSearchQuery" 
+                    [ngModelOptions]="{standalone: true}"
+                    (keydown)="$event.stopPropagation()"
+                    placeholder="Search users by full name..." 
+                    class="w-full pl-8 pr-7 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 transition-colors">
+                  <button 
+                    *ngIf="assigneeSearchQuery" 
+                    (click)="assigneeSearchQuery = ''" 
+                    type="button" 
+                    class="absolute right-2 text-slate-400 hover:text-slate-600">
+                    <mat-icon class="!w-3.5 !h-3.5 !text-sm">close</mat-icon>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="max-h-[240px] overflow-y-auto py-1">
+                <div 
+                  *ngFor="let user of filteredUsers" 
+                  (click)="toggleUserAssignee(user.id); $event.stopPropagation()"
+                  class="px-4 py-2 flex flex-row items-center gap-3 w-full hover:bg-indigo-50/60 cursor-pointer transition-colors border-b border-slate-50 last:border-0">
+                  
+                  <!-- Checkbox -->
+                  <mat-checkbox 
+                    [checked]="isUserSelected(user.id)" 
+                    (change)="toggleUserAssignee(user.id)" 
+                    color="primary" 
+                    (click)="$event.stopPropagation()"
+                    class="shrink-0 flex items-center leading-none">
+                  </mat-checkbox>
+                  
+                  <!-- User Avatar -->
+                  <div 
+                    class="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-2xs leading-none"
+                    [style.background-color]="getAvatarColor(user.fullName)">
+                    {{ getUserInitial(user.fullName) }}
+                  </div>
+                  
+                  <!-- Stacked Full Name (Top) & @username (Bottom) -->
+                  <div class="flex flex-col text-left min-w-0 flex-1 gap-0.5">
+                    <span class="text-sm font-semibold text-slate-900 leading-tight truncate">{{ user.fullName }}</span>
+                    <span class="text-xs text-slate-400 leading-none truncate">@{{ user.username }}</span>
+                  </div>
+
+                </div>
+
+                <!-- Empty Search State -->
+                <div *ngIf="filteredUsers.length === 0" class="px-4 py-3 text-center text-xs text-slate-400 italic">
+                  No users match "{{ assigneeSearchQuery }}"
+                </div>
+              </div>
+            </mat-menu>
+
+          </div>
+        </div>
+
+      </div>
+
+    </mat-dialog-content>
+
+    <!-- Dialog Actions Footer -->
+    <mat-dialog-actions align="end" class="!px-0 mt-3 pt-3 border-t border-slate-100">
+      <button mat-button type="button" (click)="onCancel()">Cancel</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
+        {{ data.submitText || 'Save Task' }}
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>
