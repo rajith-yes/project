@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  padding: 0.5rem;
+}
+
+.icon-wrapper {
+  padding: 0.5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.danger {
+    background-color: #fee2e2;
+    color: #dc2626;
+  }
+
+  &.primary {
+    background-color: #e0e7ff;
+    color: #4f46e5;
+  }
+}

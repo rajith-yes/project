@@ -1,0 +1,73 @@
+<div class="auth-container">
+  <div class="auth-card-wrapper">
+    <div class="brand-header">
+      <div class="logo-icon">
+        <mat-icon>person_add</mat-icon>
+      </div>
+      <h1>Create Account</h1>
+      <p>Get started with TaskFlow Pro today</p>
+    </div>
+
+    <mat-card class="auth-card">
+      <mat-card-content class="!p-6 sm:!p-8">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+          
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="fullName" placeholder="e.g. Sarah Jenkins">
+            <mat-icon matPrefix color="primary" class="mr-2">badge</mat-icon>
+            <mat-error *ngIf="signupForm.get('fullName')?.hasError('required')">
+              Full Name is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" placeholder="e.g. sjenkins">
+            <mat-icon matPrefix color="primary" class="mr-2">account_circle</mat-icon>
+            <mat-error *ngIf="signupForm.get('username')?.hasError('required')">
+              Username is required
+            </mat-error>
+            <mat-error *ngIf="signupForm.get('username')?.hasError('usernameTaken')">
+              This username is already taken
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Min 6 characters">
+            <mat-icon matPrefix color="primary" class="mr-2">lock</mat-icon>
+            <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'">
+              <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="signupForm.get('password')?.hasError('required')">
+              Password is required
+            </mat-error>
+            <mat-error *ngIf="signupForm.get('password')?.hasError('minlength')">
+              Password must be at least 6 characters
+            </mat-error>
+          </mat-form-field>
+
+          <button 
+            mat-flat-button 
+            color="primary" 
+            type="submit" 
+            class="submit-btn py-3 text-base font-semibold transition-all shadow-md hover:shadow-lg mt-2"
+            [disabled]="signupForm.invalid || isLoading">
+            <div class="flex items-center justify-center gap-2">
+              <mat-spinner *ngIf="isLoading" diameter="20" color="accent"></mat-spinner>
+              <span>{{ isLoading ? 'Creating account...' : 'Sign Up' }}</span>
+            </div>
+          </button>
+
+        </form>
+
+        <div class="mt-6 pt-6 border-t border-slate-200 text-center text-sm text-slate-600">
+          Already have an account? 
+          <a routerLink="/login" class="text-indigo-600 font-semibold hover:underline">Sign In</a>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

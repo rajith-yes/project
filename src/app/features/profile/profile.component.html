@@ -1,0 +1,76 @@
+<div class="max-w-2xl mx-auto space-y-6">
+  <div>
+    <h1 class="text-2xl font-bold text-slate-900 tracking-tight m-0">Account Profile</h1>
+    <p class="text-sm text-slate-500 mt-1">Manage your personal account settings and profile details.</p>
+  </div>
+
+  <mat-card class="!p-6 sm:!p-8">
+    <!-- Profile Header with Top-Right Role Badge -->
+    <div class="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6 pb-6 mb-6 border-b border-slate-200">
+      
+      <!-- Left: Avatar + Name & Username -->
+      <div class="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 text-white font-extrabold text-3xl flex items-center justify-center shadow-lg border-4 border-white shrink-0">
+          {{ getInitial() }}
+        </div>
+        
+        <div class="flex flex-col items-center sm:items-start text-center sm:text-left">
+          <h2 class="text-xl font-bold text-slate-900 m-0 leading-tight">{{ currentUser?.fullName }}</h2>
+          <p class="text-sm font-medium text-indigo-600 m-0 mt-1 leading-none">&#64;{{ currentUser?.username }}</p>
+        </div>
+      </div>
+
+      <!-- Right: Role Badge (Straight across from Full Name) -->
+      <div class="shrink-0 mt-1">
+        <span class="inline-flex items-center px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold border border-indigo-100/80 shadow-2xs">
+          Workspace Administrator
+        </span>
+      </div>
+
+    </div>
+
+    <form [formGroup]="profileForm" (ngSubmit)="onSave()" class="space-y-5">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Full Name</mat-label>
+        <input matInput formControlName="fullName" placeholder="Enter full name">
+        <mat-icon matPrefix color="primary" class="mr-2">badge</mat-icon>
+        <mat-error *ngIf="profileForm.get('fullName')?.hasError('required')">
+          Full Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Username (Read-Only)</mat-label>
+        <input matInput formControlName="username" [readonly]="true">
+        <mat-icon matPrefix color="primary" class="mr-2">account_circle</mat-icon>
+        <mat-hint>Username cannot be changed once created.</mat-hint>
+      </mat-form-field>
+
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-100">
+        <button 
+          mat-flat-button 
+          color="primary" 
+          type="submit" 
+          class="w-full sm:w-auto !rounded-xl !py-2.5 !px-6 !text-base font-semibold"
+          [disabled]="profileForm.invalid || !isFormChanged || isLoading">
+          <div class="flex items-center gap-2">
+            <mat-spinner *ngIf="isLoading" diameter="18"></mat-spinner>
+            <mat-icon *ngIf="!isLoading">save</mat-icon>
+            <span>Save Profile Changes</span>
+          </div>
+        </button>
+
+        <button 
+          mat-stroked-button 
+          color="warn" 
+          type="button" 
+          (click)="onLogout()" 
+          class="w-full sm:w-auto !rounded-xl !py-2.5 !px-6">
+          <mat-icon class="mr-1">logout</mat-icon>
+          Sign Out
+        </button>
+      </div>
+
+    </form>
+  </mat-card>
+</div>

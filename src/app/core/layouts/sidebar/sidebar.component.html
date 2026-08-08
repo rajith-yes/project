@@ -1,0 +1,58 @@
+<div class="sidebar-container flex flex-col h-full bg-slate-900 text-slate-100 border-r border-slate-800">
+  <div class="sidebar-header p-4 flex items-center justify-between border-b border-slate-800">
+    <div class="flex items-center gap-3">
+      <div class="logo-box bg-indigo-600 rounded-xl p-2 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+        <mat-icon class="!text-2xl">check_box</mat-icon>
+      </div>
+      <span class="font-bold text-lg tracking-tight text-white">TaskFlow Pro</span>
+    </div>
+  </div>
+
+  <div class="sidebar-nav flex-1 py-4 px-3 space-y-1">
+    <a 
+      routerLink="/home" 
+      routerLinkActive="active-link" 
+      class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors font-medium text-sm">
+      <mat-icon class="!text-xl">space_dashboard</mat-icon>
+      <span>Home</span>
+    </a>
+
+    <a 
+      routerLink="/task-board" 
+      routerLinkActive="active-link" 
+      class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors font-medium text-sm">
+      <mat-icon class="!text-xl">view_kanban</mat-icon>
+      <span>Task Board</span>
+    </a>
+
+    <a 
+      routerLink="/dashboard" 
+      routerLinkActive="active-link" 
+      class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors font-medium text-sm">
+      <mat-icon class="!text-xl">analytics</mat-icon>
+      <span>Dashboard</span>
+    </a>
+  </div>
+
+  <div class="sidebar-footer p-3 border-t border-slate-800 bg-slate-900/50">
+    <div 
+      (click)="navigateToProfile()" 
+      class="profile-card flex items-center gap-3 p-2 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors"
+      matTooltip="View Profile">
+      <div class="avatar-circle w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-base shadow">
+        {{ getInitial() }}
+      </div>
+
+      <div class="user-info flex-1 min-w-0">
+        <p class="text-sm font-semibold text-white truncate m-0">
+          {{ currentUser?.fullName || 'User' }}
+        </p>
+        <p class="text-xs text-slate-400 truncate m-0">
+          &#64;{{ currentUser?.username || 'user' }}
+        </p>
+      </div>
+
+      <mat-icon class="text-slate-500 !text-lg">chevron_right</mat-icon>
+    </div>
+  </div>
+</div>

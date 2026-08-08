@@ -1,1 +1,16 @@
-<div>hi</div>
+<!-- Top Edge Global Progress Bar -->
+<div *ngIf="loadingService.isLoadingSignal()" class="fixed top-0 left-0 right-0 z-[9999] pointer-events-none">
+  <mat-progress-bar mode="indeterminate" color="primary" class="!h-1"></mat-progress-bar>
+</div>
+
+<!-- Center Floating Glassmorphism API Loading Spinner Overlay -->
+<div 
+  *ngIf="loadingService.isLoadingSignal()" 
+  class="fixed inset-0 z-[9998] bg-slate-900/15 backdrop-blur-[1px] flex flex-col items-center justify-center pointer-events-none transition-all">
+  <div class="p-4 px-6 rounded-2xl bg-white/95 shadow-2xl border border-slate-200/80 flex items-center gap-3.5 pointer-events-auto">
+    <mat-spinner diameter="28" color="primary"></mat-spinner>
+    <span class="text-xs font-bold text-slate-700 tracking-wide">Syncing data...</span>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

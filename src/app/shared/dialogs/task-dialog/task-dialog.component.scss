@@ -1,0 +1,10 @@
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1.25rem !important;
+}
+
+/* Ensure textarea fields have generous room without squishing */
+textarea.mat-mdc-input-element {
+  min-height: 80px !important;
+  padding-top: 8px !important;
+}

@@ -1,0 +1,311 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "fullName": "John Doe",
+      "username": "john",
+      "password": "123456"
+    },
+    {
+      "id": "2",
+      "fullName": "Jane Smith",
+      "username": "jane",
+      "password": "123456"
+    },
+    {
+      "id": "3",
+      "fullName": "Alex Rivera",
+      "username": "alex",
+      "password": "123456"
+    },
+    {
+      "fullName": "Rajith",
+      "username": "rajithyes",
+      "password": "123456",
+      "id": "LQzmYAv_Lf4"
+    },
+    {
+      "fullName": "Siva Bharrath",
+      "username": "sivayes",
+      "password": "123456",
+      "id": "fE8sOoneE9E"
+    },
+    {
+      "fullName": "Aravind MS",
+      "username": "aravindms",
+      "password": "123456",
+      "id": "dTI8RkXKYUo"
+    },
+    {
+      "fullName": "Keerthigan",
+      "username": "keerthigan",
+      "password": "123456",
+      "id": "y0jpCjXHtJQ"
+    },
+    {
+      "fullName": "Pranesh Karan",
+      "username": "praneshkaran",
+      "password": "123456",
+      "id": "3g6zEQHLAww"
+    },
+    {
+      "fullName": "Harish Karan",
+      "username": "harishkaran",
+      "password": "123456",
+      "id": "D7PKjWXQMMM"
+    },
+    {
+      "fullName": "Jaison SL",
+      "username": "jaisonsl",
+      "password": "123456",
+      "id": "RVkr83UjNMQ"
+    }
+  ],
+  "boards": [
+    {
+      "id": "1",
+      "name": "Product Roadmap 2026",
+      "createdBy": "1"
+    },
+    {
+      "id": "2",
+      "name": "Sprint Alpha - Mobile App",
+      "createdBy": "1"
+    },
+    {
+      "id": "3",
+      "name": "Marketing & Launch",
+      "createdBy": "2"
+    },
+    {
+      "id": "7HkUYYLHPgU",
+      "name": "hi",
+      "createdBy": "1"
+    },
+    {
+      "id": "qn3zUOWh9vI",
+      "name": "hey",
+      "createdBy": "LQzmYAv_Lf4"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "1",
+      "boardId": "1",
+      "taskName": "Design Authentication UI",
+      "description": "Create high-fidelity mockups for Login and Signup flows using Material components.",
+      "status": "Completed",
+      "assignees": [
+        "1",
+        "2"
+      ],
+      "createdBy": "1",
+      "createdOn": "2026-08-01"
+    },
+    {
+      "id": "2",
+      "boardId": "1",
+      "taskName": "Implement JSON Server Backend",
+      "description": "Configure mock REST API endpoint with users, boards, and tasks collections.",
+      "status": "Completed",
+      "assignees": [
+        "1"
+      ],
+      "createdBy": "1",
+      "createdOn": "2026-08-02"
+    },
+    {
+      "id": "3",
+      "boardId": "1",
+      "taskName": "Build Kanban Drag and Drop",
+      "description": "Integrate Angular CDK Drag & Drop across the 5 status columns.",
+      "status": "In Progress",
+      "assignees": [
+        "1",
+        "3"
+      ],
+      "createdBy": "1",
+      "createdOn": "2026-08-03"
+    },
+    {
+      "id": "4",
+      "boardId": "1",
+      "taskName": "Setup Dashboard Analytics",
+      "description": "Embed Chart.js pie chart and summary table with status filters and sorting.",
+      "status": "In Testing",
+      "assignees": [
+        "2"
+      ],
+      "createdBy": "1",
+      "createdOn": "2026-08-04"
+    },
+    {
+      "id": "5",
+      "boardId": "1",
+      "taskName": "Write E2E Verification Tests",
+      "description": "Verify task creation, moving, searching, and user profile updates.",
+      "status": "Todo",
+      "assignees": [
+        "3"
+      ],
+      "createdBy": "1",
+      "createdOn": "2026-08-05"
+    },
+    {
+      "id": "6",
+      "boardId": "1",
+      "taskName": "Optimize Responsive Mobile Drawer",
+      "description": "Ensure navigation sidebar collapses seamlessly on mobile viewports.",
+      "status": "Backlog",
+      "assignees": [
+        "1",
+        "2"
+      ],
+      "createdBy": "1",
+      "createdOn": "2026-08-06"
+    },
+    {
+      "id": "7",
+      "boardId": "2",
+      "taskName": "Push Notification Service",
+      "description": "Configure FCM web push triggers for assigned tasks.",
+      "status": "Backlog",
+      "assignees": [
+        "2",
+        "3"
+      ],
+      "createdBy": "1",
+      "createdOn": "2026-08-05"
+    },
+    {
+      "id": "8",
+      "boardId": "2",
+      "taskName": "Biometric Authentication",
+      "description": "Support Face ID and Fingerprint login on iOS/Android.",
+      "status": "Todo",
+      "assignees": [
+        "1"
+      ],
+      "createdBy": "1",
+      "createdOn": "2026-08-06"
+    },
+    {
+      "id": "9",
+      "boardId": "3",
+      "taskName": "Landing Page Copywriting",
+      "description": "Draft value propositions, feature highlights, and SaaS testimonials.",
+      "status": "Completed",
+      "assignees": [
+        "2"
+      ],
+      "createdBy": "2",
+      "createdOn": "2026-08-04"
+    },
+    {
+      "id": "10",
+      "boardId": "3",
+      "taskName": "Social Media Campaign Launch",
+      "description": "Prepare graphics and scheduled tweets for product release announcement.",
+      "status": "In Progress",
+      "assignees": [
+        "2",
+        "3"
+      ],
+      "createdBy": "2",
+      "createdOn": "2026-08-07"
+    },
+    {
+      "boardId": "7HkUYYLHPgU",
+      "taskName": "new one",
+      "description": "hey yo",
+      "status": "In Progress",
+      "assignees": [
+        "1",
+        "2"
+      ],
+      "createdBy": "1",
+      "createdOn": "2026-08-07",
+      "id": "qNPga71XwuA"
+    },
+    {
+      "boardId": "qn3zUOWh9vI",
+      "taskName": "task1",
+      "description": "task1",
+      "status": "Backlog",
+      "assignees": [
+        "1",
+        "2",
+        "3",
+        "LQzmYAv_Lf4",
+        "fE8sOoneE9E",
+        "dTI8RkXKYUo",
+        "y0jpCjXHtJQ",
+        "3g6zEQHLAww",
+        "D7PKjWXQMMM",
+        "RVkr83UjNMQ"
+      ],
+      "createdBy": "LQzmYAv_Lf4",
+      "createdOn": "2026-08-07",
+      "id": "rnYCHtnl398"
+    },
+    {
+      "boardId": "qn3zUOWh9vI",
+      "taskName": "task2",
+      "description": "task2",
+      "status": "In Progress",
+      "assignees": [],
+      "createdBy": "LQzmYAv_Lf4",
+      "createdOn": "2026-08-07",
+      "id": "3RmcSia34Ec"
+    },
+    {
+      "boardId": "qn3zUOWh9vI",
+      "taskName": "task3",
+      "description": "",
+      "status": "Todo",
+      "assignees": [
+        "LQzmYAv_Lf4"
+      ],
+      "createdBy": "LQzmYAv_Lf4",
+      "createdOn": "2026-08-07",
+      "id": "yfUD-0rB2Ds"
+    },
+    {
+      "boardId": "qn3zUOWh9vI",
+      "taskName": "task4",
+      "description": "atask4",
+      "status": "In Testing",
+      "assignees": [
+        "2",
+        "LQzmYAv_Lf4"
+      ],
+      "createdBy": "LQzmYAv_Lf4",
+      "createdOn": "2026-08-07",
+      "id": "J38rDg00yxo"
+    },
+    {
+      "boardId": "qn3zUOWh9vI",
+      "taskName": "task5",
+      "description": "rajith",
+      "status": "Todo",
+      "assignees": [
+        "3",
+        "LQzmYAv_Lf4"
+      ],
+      "createdBy": "LQzmYAv_Lf4",
+      "createdOn": "2026-08-07",
+      "id": "vcyaRY-ZDls"
+    },
+    {
+      "boardId": "qn3zUOWh9vI",
+      "taskName": "task6",
+      "description": "task6",
+      "status": "Todo",
+      "assignees": [],
+      "createdBy": "LQzmYAv_Lf4",
+      "createdOn": "2026-08-08",
+      "id": "kY8BE72N1m8"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

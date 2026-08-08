@@ -1,0 +1,72 @@
+<mat-sidenav-container class="h-screen w-screen overflow-hidden">
+  <mat-sidenav 
+    #sidenav 
+    [mode]="isMobile ? 'over' : 'side'" 
+    [opened]="!isMobile"
+    class="!border-r-0 !bg-slate-900 shadow-xl">
+    <app-sidebar></app-sidebar>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="flex flex-col h-full bg-slate-50 overflow-y-auto">
+    <mat-toolbar class="!bg-white border-b border-slate-200 !px-4 sm:!px-6 flex justify-between items-center shadow-xs sticky top-0 z-30 min-h-[64px]">
+      <div class="flex items-center gap-3">
+        <button 
+          *ngIf="isMobile" 
+          mat-icon-button 
+          (click)="sidenav.toggle()" 
+          aria-label="Toggle menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+        
+        <div class="flex items-center gap-2 text-slate-800 font-semibold text-base sm:text-lg">
+          <mat-icon color="primary" class="hidden sm:inline-block !w-6 !h-6 !text-2xl leading-none">dashboard_customize</mat-icon>
+          <span>Task Management System</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 sm:gap-4 shrink-0 my-auto">
+        <a 
+          mat-stroked-button 
+          routerLink="/task-board" 
+          class="hidden md:inline-flex items-center gap-1.5 !rounded-xl !h-9 !m-0 !px-3.5 !text-sm font-semibold text-slate-700 hover:bg-slate-50">
+          <mat-icon color="primary" class="!w-4 !h-4 !text-lg leading-none">view_kanban</mat-icon>
+          <span class="leading-none">Go to Board</span>
+        </a>
+
+        <a 
+          mat-stroked-button 
+          routerLink="/dashboard" 
+          class="hidden md:inline-flex items-center gap-1.5 !rounded-xl !h-9 !m-0 !px-3.5 !text-sm font-semibold text-slate-700 hover:bg-slate-50">
+          <mat-icon color="accent" class="!w-4 !h-4 !text-lg leading-none">analytics</mat-icon>
+          <span class="leading-none">Go to Dashboard</span>
+        </a>
+
+        <div 
+          [matMenuTriggerFor]="userMenu" 
+          matTooltip="User Profile"
+          class="w-9 h-9 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-xs cursor-pointer hover:ring-2 hover:ring-indigo-300 transition-all shrink-0 my-auto ml-1">
+          {{ getInitial() }}
+        </div>
+
+        <mat-menu #userMenu="matMenu" xPosition="before" class="!rounded-xl">
+          <div class="px-4 py-2 border-b border-slate-100">
+            <p class="font-bold text-sm text-slate-800 m-0">{{ currentUser?.fullName }}</p>
+            <p class="text-xs text-slate-500 m-0">&#64;{{ currentUser?.username }}</p>
+          </div>
+          <button mat-menu-item routerLink="/profile">
+            <mat-icon>person</mat-icon>
+            <span>Profile Settings</span>
+          </button>
+          <button mat-menu-item (click)="onLogout()" class="!text-red-600">
+            <mat-icon color="warn">logout</mat-icon>
+            <span>Sign Out</span>
+          </button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+
+    <main class="flex-1 p-4 sm:p-6 md:p-8 max-w-7xl w-full mx-auto">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,113 @@
+.kanban-board-container {
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  
+  /* Custom smooth horizontal scrollbar */
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 9999px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+    &:hover {
+      background: #94a3b8;
+    }
+  }
+}
+
+.kanban-grid {
+  display: flex;
+  gap: 1.25rem;
+  height: calc(100vh - 270px);
+  min-height: 580px;
+  align-items: stretch;
+}
+
+.kanban-column {
+  flex: 1;
+  min-width: 280px;
+  max-width: 340px;
+  height: 100%;
+  background-color: rgba(241, 245, 249, 0.75);
+  border-radius: 1rem;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  padding: 0.875rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.column-header {
+  flex-shrink: 0;
+}
+
+.task-drop-zone {
+  flex: 1;
+  overflow-y: auto;
+  border-radius: 12px;
+  padding-right: 0.25rem;
+  
+  /* Custom smooth vertical scrollbar */
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+    &:hover {
+      background: #94a3b8;
+    }
+  }
+}
+
+.task-card {
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+  }
+}
+
+/* Precise Dead-Center Alignment for Task Options Menu Button */
+.task-options-btn {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  border-radius: 9999px !important;
+  
+  ::ng-deep .mat-mdc-button-touch-target {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  mat-icon {
+    width: 18px !important;
+    height: 18px !important;
+    font-size: 18px !important;
+    line-height: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+  }
+}
+
+.search-tasks-field {
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none !important;
+  }
+}
+
