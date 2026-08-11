@@ -68,6 +68,7 @@ Chart.register(...registerables);
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('pieCanvas') pieCanvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('barCanvas') barCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -89,7 +90,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedStatuses: TaskStatus[] = [];
 
   chart: Chart | null = null;
+  barChart: Chart | null = null;
   chartCounts: { status: string; count: number }[] = [];
+  completedCount: number = 0;
+  totalTaskCount: number = 0;
 
   ngOnInit(): void {
     // Component initialization
@@ -102,6 +106,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.chart) {
       this.chart.destroy();
+    }
+    if (this.barChart) {
+      this.barChart.destroy();
     }
   }
 
@@ -240,7 +247,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.paginator) this.dataSource.paginator = this.paginator;
     if (this.sort) this.dataSource.sort = this.sort;
 
+    this.totalTaskCount = result.length;
+    this.completedCount = result.filter(t => t.status === 'Completed').length;
+
     this.updatePieChart(result);
+    this.updateBarChart(result);
   }
 
   clearFilters(): void {
@@ -296,9 +307,77 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             position: 'bottom',
             labels: {
               usePointStyle: true,
-              padding: 15,
-              font: { family: 'Inter', size: 12 }
+              padding: 12,
+              font: { family: 'Inter', size: 11 }
             }
+          }
+        }
+      }
+    });
+  }
+
+  updateBarChart(tasks: TaskItem[]): void {
+    const counts = this.statuses.map(s => tasks.filter(t => t.status === s).length);
+
+    if (!this.barCanvas) return;
+
+    const ctx = this.barCanvas.nativeElement.getContext('2d');
+    if (!ctx) return;
+
+    if (this.barChart) {
+      this.barChart.destroy();
+    }
+
+    this.barChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Backlog', 'Todo', 'In Progress', 'In Testing', 'Completed'],
+        datasets: [{
+          label: 'Tasks Count',
+          data: counts,
+          backgroundColor: [
+            'rgba(100, 116, 139, 0.75)',
+            'rgba(2, 132, 199, 0.75)',
+            'rgba(217, 119, 6, 0.75)',
+            'rgba(147, 51, 234, 0.75)',
+            'rgba(16, 185, 129, 0.95)'
+          ],
+          borderColor: [
+            '#64748b',
+            '#0284c7',
+            '#d97706',
+            '#9333ea',
+            '#10b981'
+          ],
+          borderWidth: 2,
+          borderRadius: 8,
+          borderSkipped: false
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            backgroundColor: '#0f172a',
+            padding: 10,
+            cornerRadius: 8,
+            titleFont: { family: 'Inter', size: 12 },
+            bodyFont: { family: 'Inter', size: 12 }
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { font: { family: 'Inter', size: 11 }, color: '#64748b' }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: { precision: 0, font: { family: 'Inter', size: 11 }, color: '#64748b' },
+            grid: { color: '#f1f5f9' }
           }
         }
       }
