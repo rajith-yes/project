@@ -298,6 +298,16 @@ mat-icon, .mat-icon {
   padding: 1.25rem !important;
 }
 
+/* Responsive Mobile Dialog Sizing */
+@media (max-width: 640px) {
+  .cdk-overlay-pane {
+    max-width: 94vw !important;
+  }
+  .cdk-overlay-pane .mat-mdc-dialog-container .mdc-dialog__surface {
+    padding: 1rem !important;
+  }
+}
+
 /* CDK Drag & Drop */
 .cdk-drag-preview {
   box-shadow: var(--shadow-xl) !important;
@@ -327,6 +337,7 @@ mat-icon, .mat-icon {
 }
 
 .mat-mdc-header-cell {
+  background-color: #f8fafc !important;
   color: #475569 !important;
   font-weight: 700 !important;
   font-size: 0.8rem !important;
@@ -334,6 +345,9 @@ mat-icon, .mat-icon {
   letter-spacing: 0.05em;
   border-bottom: 1px solid #e2e8f0 !important;
   font-family: var(--font-sans) !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 20 !important;
 }
 
 .mat-mdc-cell {
@@ -342,4 +356,62 @@ mat-icon, .mat-icon {
   padding-top: 0.75rem !important;
   padding-bottom: 0.75rem !important;
   font-family: var(--font-sans) !important;
+}
+
+/* =========================================================
+   PURE WHITE BACKGROUND & HIGH CONTRAST STYLING FOR ALL MENUS AND DATEPICKER OVERLAYS
+   ========================================================= */
+
+.mat-mdc-menu-panel,
+.mat-mdc-select-panel,
+.mat-menu-panel,
+.mat-select-panel,
+.cdk-overlay-pane .mat-mdc-menu-panel,
+.cdk-overlay-pane .mat-mdc-select-panel {
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}
+
+.mat-mdc-menu-content,
+.mat-mdc-select-panel .mat-mdc-option {
+  background-color: #ffffff !important;
+}
+
+.mat-datepicker-content,
+.mat-datepicker-popup,
+.mat-calendar,
+.mat-calendar-header,
+.mat-calendar-content,
+.mat-calendar-table {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+.mat-datepicker-content {
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}
+
+.mat-calendar-table-header th {
+  color: #64748b !important;
+  font-weight: 700 !important;
+}
+
+.mat-calendar-body-cell-content {
+  color: #0f172a !important;
+  font-weight: 500 !important;
+}
+
+.mat-calendar-body-selected {
+  background-color: #4f46e5 !important;
+  color: #ffffff !important;
+}
+
+.mat-calendar-body-today:not(.mat-calendar-body-selected) {
+  border-color: #4f46e5 !important;
 }
